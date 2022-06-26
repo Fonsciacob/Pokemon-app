@@ -9,13 +9,23 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Abilities {
 
+    private String id;
     private String base_experience;
     private List<Ability> abilities;
     private List<Stat> stats;
     private String name;
     private Sprites sprites;
+    private Value evolution_chain;
 
     public Abilities(){}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getBase_experience() {
         return base_experience;
@@ -57,14 +67,24 @@ public class Abilities {
         this.sprites = sprites;
     }
 
+    public Value getEvolution_chain() {
+        return evolution_chain;
+    }
+
+    public void setEvolution_chain(Value evolution_chain) {
+        this.evolution_chain = evolution_chain;
+    }
+
     @Override
     public String toString() {
         return "Abilities{" +
-                "base_experience='" + base_experience + '\'' +
+                "id='" + id + '\'' +
+                ", base_experience='" + base_experience + '\'' +
                 ", abilities=" + abilities +
                 ", stats=" + stats +
                 ", name='" + name + '\'' +
-                ", sprites='" + sprites + '\'' +
+                ", sprites=" + sprites +
+                ", evolution_chain=" + evolution_chain +
                 '}';
     }
 }

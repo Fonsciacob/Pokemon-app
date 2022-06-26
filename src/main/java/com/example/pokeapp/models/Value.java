@@ -8,7 +8,6 @@ public class Value {
     private String name;
     private String url;
 
-
     public Value() {}
 
     public String getName() {
