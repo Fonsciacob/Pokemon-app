@@ -2,14 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Title</title>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-primary position-relative" style="height: 50px">
-    <div class="container-fluid bg-primary position-fixed" style="height: 50px">
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container-fluid">
         <a class="navbar-brand" href="/pokemon">
             <img src="../icons/pokeball.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
             Pokedex
@@ -28,7 +29,7 @@
 
         <div class="d-flex align-items-center justify-content-center p-4 flex-wrap">
             <div class="p-4 mb-2" style="height: 220px">
-                <img th:src="${img.getHome().getFront_default()}" style="height: 220px;">
+                <img th:src="${img.getDream_world().getFront_default()}" style="height: 220px;">
             </div>
             <div class="d-flex flex-wrap w-100 mt-5">
                 <div class="w-50">
@@ -64,15 +65,22 @@
             </div>
             <div class="w-100 mt-4">
                 <h4>Evolutions</h4>
-                <div class="d-flex justify-content-evenly">
-                    <div th:each="item: ${evolutions}">
-                        <div class="text-center">
-                            <div class="p-4 mb-2" style="height: 220px">
-                                <img th:src="${item.getSprites().getOther().getHome().getFront_default()}" style="height: 220px;">
-                            </div>
+                <div class="d-flex justify-content-center">
+                    <div th:each="item,iterator: ${evolutions}" class="d-flex align-items-center text-center">
+                        <div class="p-4 mb-2">
+                            <img th:src="${item.getSprites().getOther().getHome().getFront_default()}"
+                                 style="height: 220px;">
+
                             <div class="mt-4">
-                                <p th:text="${item.getName()}"/>
+                                <a class="text-decoration-none" th:text="${item.getName()}"
+                                   th:href="'/pokemon/detail?search='+${item.getName()}"/>
+
+                                <p>Base Experience</p>
+                                <p th:text="${item.getBase_experience()}"/>
                             </div>
+                        </div>
+                        <div th:if="${iterator.last==false}">
+                            <img src="../icons/arrow-right.svg">
                         </div>
                     </div>
                 </div>

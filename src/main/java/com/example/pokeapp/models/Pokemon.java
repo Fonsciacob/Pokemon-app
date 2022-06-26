@@ -1,26 +1,18 @@
 package com.example.pokeapp.models;
 
+import com.example.pokeapp.models.abilities.Abilities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Pokemon {
+public class Pokemon extends Abilities {
 
-    private String id;
     private String next;
     private String previous;
     private List<Value> results;
 
     public Pokemon() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNext() {
@@ -50,8 +42,7 @@ public class Pokemon {
     @Override
     public String toString() {
         return "Pokemon{" +
-                "id='" + id + '\'' +
-                ", next='" + next + '\'' +
+                "next='" + next + '\'' +
                 ", previous='" + previous + '\'' +
                 ", results=" + results +
                 '}';

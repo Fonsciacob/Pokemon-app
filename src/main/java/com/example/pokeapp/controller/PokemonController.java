@@ -1,6 +1,7 @@
 package com.example.pokeapp.controller;
 
 import com.example.pokeapp.models.Pokemon;
+import com.example.pokeapp.models.Value;
 import com.example.pokeapp.models.abilities.Abilities;
 import com.example.pokeapp.models.species.Evolves;
 import com.example.pokeapp.models.species.PrincipalSpecies;
@@ -23,6 +24,12 @@ public class PokemonController {
         RestTemplate restTemplate = new RestTemplate();
         Pokemon poke = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/?offset=" + offset + "&limit=" + limit + "", Pokemon.class);
 
+        ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
+
+        for (Value value : poke.getResults()) {
+            pokemons.add(restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + value.getName() + "", Pokemon.class));
+        }
+
         if (poke.getPrevious() != null) {
             URL back = new URL(poke.getPrevious());
             model.addAttribute("back", back.getQuery());
@@ -33,7 +40,7 @@ public class PokemonController {
         URL next = new URL(poke.getNext());
 
         model.addAttribute("next", next.getQuery());
-        model.addAttribute("pokemons", poke.getResults());
+        model.addAttribute("pokemons", pokemons);
 
         return "inicio";
     }
@@ -44,15 +51,20 @@ public class PokemonController {
         RestTemplate restTemplate = new RestTemplate();
         ArrayList<Abilities> pokemons = new ArrayList<Abilities>();
 
-        Abilities abilities = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + search + "", Abilities.class);
-        Abilities urlEvolution = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/" + search + "", Abilities.class);
+        Pokemon abilities = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + search + "", Pokemon.class);
+        Pokemon urlEvolution = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/" + search + "", Pokemon.class);
+
+        //Consume Evolution Chains
         PrincipalSpecies species = restTemplate.getForObject(urlEvolution.getEvolution_chain().getUrl(), PrincipalSpecies.class);
 
+        Pokemon abilitiesP = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + species.getChain().getSpecies().getName() + "", Pokemon.class);
+        pokemons.add(abilitiesP);
+
         for (Evolves evolves : species.getChain().getEvolves_to()) {
-            Abilities abilities1 = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + evolves.getSpecies().getName() + "", Abilities.class);
+            Pokemon abilities1 = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + evolves.getSpecies().getName() + "", Pokemon.class);
             pokemons.add(abilities1);
             for (Species specie : evolves.getEvolves_to()) {
-                Abilities abilities2 = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + specie.getSpecies().getName() + "", Abilities.class);
+                Pokemon abilities2 = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + specie.getSpecies().getName() + "", Pokemon.class);
                 pokemons.add(abilities2);
             }
         }
