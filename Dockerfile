@@ -6,6 +6,6 @@ RUN ./gradlew bootJar --no-daemon
 
 FROM openjdk:22-jdk-slim
 EXPOSE 8080
-COPY --from= build /build/libs/Poke-api-0.0.1.jar poke_app.jar
+COPY --from=build /build/libs/Poke-api-0.0.1.jar poke_app.jar
 
 ENTRYPOINT ["java","-jar", "poke_app.jar"]
