@@ -49,11 +49,12 @@ public class PokemonController {
     @GetMapping("/pokemon/detail")
     public String getDetailPokemon(@RequestParam(name = "search", required = true) String search, Model model) {
 
+        String name = search.toLowerCase();
+
         try {
             RestTemplate restTemplate = new RestTemplate();
             ArrayList<Abilities> pokemons = new ArrayList<Abilities>();
 
-            String name = search.toLowerCase();
             Pokemon pokemon = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + name + "", Pokemon.class);
             Pokemon urlEvolution = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/" + name + "", Pokemon.class);
 
@@ -80,8 +81,8 @@ public class PokemonController {
 
             return "details";
         } catch (HttpClientErrorException ex) {
-            model.addAttribute("error", ex.getResponseBodyAsString());
-            return "error";
+            model.addAttribute("error", name);
+            return "not-found";
         }
     }
 }

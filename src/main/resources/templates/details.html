@@ -11,22 +11,27 @@
     <title>Pokemon App</title>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-primary">
-    <div class="container-fluid">
+<nav class="navbar-expand-lg navbar navbar-dark bg-primary">
+    <div class="container-fluid" style="gap:1.25rem">
         <a class="navbar-brand" href="/">
             <img src="../icons/pokeball.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
             Pokedex
         </a>
-        <form method="GET" action="/pokemon/detail" class="d-flex">
-            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success" type="submit">Search</button>
-        </form>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <form method="GET" action="/pokemon/detail" class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+        </div>
     </div>
 </nav>
 <section>
     <div class="container mt-4">
         <div>
-            <h2 th:text="'Pokemon - '+${pokemon}"></h2>
+            <h2 th:text="${pokemon.toUpperCase()}"></h2>
         </div>
 
         <div class="d-flex align-items-center justify-content-center p-4 flex-wrap">
