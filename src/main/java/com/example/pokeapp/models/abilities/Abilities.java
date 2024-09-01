@@ -1,6 +1,7 @@
 package com.example.pokeapp.models.abilities;
 
 import com.example.pokeapp.models.Sprites;
+import com.example.pokeapp.models.Type;
 import com.example.pokeapp.models.Value;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -16,6 +17,7 @@ public class Abilities {
     private String name;
     private Sprites sprites;
     private Value evolution_chain;
+    private List<Type> types;
 
     public Abilities(){}
 
@@ -75,6 +77,14 @@ public class Abilities {
         this.evolution_chain = evolution_chain;
     }
 
+    public List<Type> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Type> types) {
+        this.types = types;
+    }
+
     @Override
     public String toString() {
         return "Abilities{" +
@@ -85,6 +95,7 @@ public class Abilities {
                 ", name='" + name + '\'' +
                 ", sprites=" + sprites +
                 ", evolution_chain=" + evolution_chain +
+                ", types=" + types +
                 '}';
     }
 }

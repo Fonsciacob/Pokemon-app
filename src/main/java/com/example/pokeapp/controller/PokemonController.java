@@ -15,13 +15,12 @@ import org.springframework.web.client.RestTemplate;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @Controller
 public class PokemonController {
 
-    @GetMapping("/pokemon")
-    public String getAllPokemon(@RequestParam(name = "offset", required = false, defaultValue = "0") String offset, @RequestParam(name = "limit", required = false, defaultValue = "9") String limit, Model model) throws MalformedURLException {
+    @GetMapping("/")
+    public String getAllPokemon(@RequestParam(name = "offset", required = false, defaultValue = "0") String offset, @RequestParam(name = "limit", required = false, defaultValue = "8") String limit, Model model) throws MalformedURLException {
 
         RestTemplate restTemplate = new RestTemplate();
         ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
