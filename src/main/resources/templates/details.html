@@ -68,22 +68,23 @@
             <div class="w-100 mt-4">
                 <h4>Evolutions</h4>
                 <div class="d-flex justify-content-center">
-                    <div th:each="item,iterator: ${evolutions}" class="d-flex align-items-center text-center">
-                        <div class="p-4 mb-2">
-                            <img th:src="${item.getSprites().getOther().getHome().getFront_default()}"
-                                 style="height: 220px;">
+                    <div class="mt-2 col-12">
+                        <swiper-container loop="true" pagination="true">
+                            <swiper-slide th:each="item,iterator: ${evolutions}">
+                                <div class="p-4 mb-2">
+                                    <img th:src="${item.getSprites().getOther().getHome().getFront_default()}"
+                                         style="height: 220px;">
 
-                            <div class="mt-4">
-                                <a class="text-decoration-none" th:text="${item.getName()}"
-                                   th:href="'/pokemon/detail?search='+${item.getId()}"/>
+                                    <div class="mt-4">
+                                        <a class="text-decoration-none" th:text="${item.getName()}"
+                                           th:href="'/pokemon/detail?search='+${item.getId()}"/>
 
-                                <p>Base Experience</p>
-                                <p th:text="${item.getBase_experience()}"/>
-                            </div>
-                        </div>
-                        <div th:if="${iterator.last==false}">
-                            <img src="../icons/arrow-right.svg">
-                        </div>
+                                        <p>Base Experience</p>
+                                        <p th:text="${item.getBase_experience()}"/>
+                                    </div>
+                                </div>
+                            </swiper-slide>
+                        </swiper-container>
                     </div>
                 </div>
             </div>
@@ -95,5 +96,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js" crossorigin="anonymous"></script>
+<script src="../js/index.js"></script>
 </body>
 </html>
