@@ -5,12 +5,17 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!--css-->
+    <link rel="icon" type="image/x-icon" href="../icons/juego.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Title</title>
+    <title>Pokemon App</title>
 </head>
 <body>
+<style>
+    swiper-container::part(pagination) {
+        bottom: -6px;
+    }
+</style>
 <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid" style="z-index: 15">
         <a class="navbar-brand" href="#">
@@ -25,14 +30,38 @@
 </nav>
 <section>
     <div class="container p-2 text-center">
-        <div class="row row-cols-1 row-cols-md-3 g-1">
+        <div class="row row-cols-1 row-cols-md-4 g-2">
             <div class="col" th:each="pokemon: ${pokemons}">
                 <div class="card" style="margin: 0.25rem">
-                    <img th:src="${pokemon.getSprites().getFront_default()}" class="card-img-top m-auto" style="width: 120px;height: 120px">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${pokemon.getName()}"/>
 
-                        <div class="d-flex flex-wrap justify-content-evenly">
+                    <div class="d-flex flex-wrap justify-content-end gap-2 p-2">
+                        <div th:each="type: ${pokemon.types}">
+                            <div th:each="poketype: ${type.getType()}">
+                                <div class="text-light rounded"
+                                     style="width:65px"
+                                     th:classappend="${poketype.getName() == 'fire'} ? bg-danger : (${poketype.getName() == 'grass'} ? bg-success : bg-primary)"
+                                >
+                                    <p class="p-1" th:text="${poketype.getName()}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <swiper-container loop="true" pagination="true">
+                            <swiper-slide>
+                                <img th:src="${pokemon.getSprites().getFront_default()}" class="card-img-top m-auto" style="width: 130px;height: 130px">
+                            </swiper-slide>
+                            <swiper-slide>
+                                <img th:src="${pokemon.getSprites().getFront_shiny()}" class="card-img-top m-auto" style="width: 130px;height: 130px">
+                            </swiper-slide>
+                        </swiper-container>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase" th:text="${pokemon.getName()}"/>
+
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
                             <p class="font-bold">Base Experience:</p>
                             <p th:text="${pokemon.getBase_experience()}"/>
                         </div>
@@ -46,9 +75,9 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-end mt-1">
                 <li th:class="${back==null ? 'page-item disabled': 'page-item'}"><a class="page-link"
-                                                                                    th:href="'/pokemon?'+${back}">Previous</a>
+                                                                                    th:href="'?'+${back}">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" th:href="'/pokemon?'+${next}">Next</a></li>
+                <li class="page-item"><a class="page-link" th:href="'?'+${next}">Next</a></li>
             </ul>
         </nav>
     </div>
@@ -60,5 +89,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js" crossorigin="anonymous"></script>
+<script src="../js/index.js"></script>
 </body>
 </html>
