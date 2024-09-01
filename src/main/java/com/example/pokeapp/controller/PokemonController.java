@@ -53,8 +53,9 @@ public class PokemonController {
             RestTemplate restTemplate = new RestTemplate();
             ArrayList<Abilities> pokemons = new ArrayList<Abilities>();
 
-            Pokemon pokemon = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + search + "", Pokemon.class);
-            Pokemon urlEvolution = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/" + search + "", Pokemon.class);
+            String name = search.toLowerCase();
+            Pokemon pokemon = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/" + name + "", Pokemon.class);
+            Pokemon urlEvolution = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/" + name + "", Pokemon.class);
 
             //Consume Evolution Chains
             PrincipalSpecies species = restTemplate.getForObject(urlEvolution.getEvolution_chain().getUrl(), PrincipalSpecies.class);
